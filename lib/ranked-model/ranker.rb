@@ -115,9 +115,9 @@ module RankedModel
         case position
           when :first, 'first'
             if current_first && current_first.rank && ranker.preferred_spread
-              rank = current_first.rank - ranker.preferred_spread
-              rank = RankedModel::MIN_RANK_VALUE if rank < RankedModel::MIN_RANK_VALUE
-              rank_at(rank)
+              new_rank = current_first.rank - ranker.preferred_spread
+              new_rank = RankedModel::MIN_RANK_VALUE if new_rank < RankedModel::MIN_RANK_VALUE
+              rank_at(new_rank)
             elsif current_first && current_first.rank
               rank_at( ( ( RankedModel::MIN_RANK_VALUE - current_first.rank ).to_f / 2 ).ceil + current_first.rank)
             else
@@ -125,9 +125,9 @@ module RankedModel
             end
           when :last, 'last'
             if current_last && current_last.rank && ranker.preferred_spread
-              rank = current_last.rank + ranker.preferred_spread
-              rank = RankedModel::MAX_RANK_VALUE if rank > RankedModel::MAX_RANK_VALUE
-              rank_at(rank)
+              new_rank = current_last.rank + ranker.preferred_spread
+              new_rank = RankedModel::MAX_RANK_VALUE if new_rank > RankedModel::MAX_RANK_VALUE
+              rank_at(new_rank)
             elsif current_last && current_last.rank
               rank_at( ( ( RankedModel::MAX_RANK_VALUE - current_last.rank ).to_f / 2 ).ceil + current_last.rank )
             else
